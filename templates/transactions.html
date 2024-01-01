@@ -28,6 +28,12 @@
             align-items: center;
             gap: 10px;
         }
+        .btn-main{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
 
         .btn-primary {
             background-color: #f6d365;
@@ -37,6 +43,15 @@
         .btn-primary:hover {
             background-color: #f6d365;
             border-color: #f6d365;
+        }
+        .total{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: blue;
+            font-size: large;
+            margin-bottom: 10px;
+            
         }
     </style>
 </head>
@@ -61,21 +76,29 @@
                             <a class="btn btn-sm btn-primary" href="{{ url_for('edit_transaction', transaction_id=transaction.id) }}">Edit</a>
                             <a class="btn btn-sm btn-danger" href="{{ url_for('delete_transaction', transaction_id=transaction.id) }}">Delete</a>
                         </td>
-                    {% endfor %}
                     </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         {% else %}
             <p class="text-center"><b>No transactions found in the specified range</b></p>
         {% endif %}
-
-        <div class="d-flex justify-content-center">
-            <a class="btn btn-success" href="{{ url_for('add_transaction') }}">Add Transaction</a>
+        <div>
+            <span class="total"><b>{{total_balance}}</b></span>
         </div>
-        <br>
-        <div class="d-flex justify-content-center">
-            <a class="btn btn-success" href="{{ url_for('search_transactions') }}">Search Transaction</a>
-        </div>
+        <div class="btn-main">
+            <div class="d-flex justify-content-center">
+                <a class="btn btn-success" href="{{ url_for('add_transaction') }}">Add Transaction</a>
+            </div>
+            <br>
+            <div class="d-flex justify-content-center">
+                <a class="btn btn-success" href="{{ url_for('search_transactions') }}">Search Transaction</a>
+            </div>
+            <br>
+            <div class="d-flex justify-content-center">
+                <a class="btn btn-success" href="{{ url_for('total_balance') }}">Total</a>
+            </div>
+        </div>       
     </div>
 </body>
 </html>
