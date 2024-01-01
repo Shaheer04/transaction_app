@@ -3,12 +3,13 @@ from flask import Flask, render_template, request,redirect,url_for
 # Instantiate Flask functionality
 app = Flask(__name__)
 
-
 # Sample data
 transactions = [
     {'id':1, 'date':'2023-05-02', 'amount': 100},
     {'id':2, 'date':'2023-07-23', 'amount': -200},
     {'id':3, 'date':'2023-10-02', 'amount': 400},
+    {'id':4, 'date':'2023-10-17', 'amount': 300},
+    {'id':5, 'date':'2023-05-11', 'amount': 600},
 ]
 
 # Read operation
@@ -69,17 +70,16 @@ def delete_transaction(transaction_id):
 
 # search opreation
 @app.route('/search', methods=['GET', 'POST'])
-def serach_transactions():
+def search_transactions():
     if request.method == 'POST':
-        min = float(request.form(''))
-        max = float(request.form(''))
-        filtered_transaction = []
-        for transaction in transactions:
-            if min <= transaction['amount'] <= max:
-                filtered_transaction.append(transaction)
-            break
-            return render_template('transaction.html', transaction=filtered_transaction)
-    return render_template('search.html')
+        min = float(request.form['min_amount'])
+        max = float(request.form['max_amount'])
+
+        filtered_transactions = [t for t in transactions if min <= t['amount'] <= max]
+        return render_template('transactions.html', transactions=filtered_transactions)
+    
+    elif request.method == 'GET':
+        return render_template('search.html')
 
 
 # Run the Flask app
